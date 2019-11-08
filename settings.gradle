@@ -1,0 +1,4 @@
+rootProject.name = 'kotlintools'
+
+
+enableFeaturePreview('GRADLE_METADATA')

@@ -8,24 +8,26 @@ val YoutubeVideoUrl.isValid: Boolean
 val YoutubeVideoUrl.id: String
     get() = youtubeId(this)
 
+val YoutubeVideoUrl.idOrNull: String?
+    get() = youtubeIdOrNull(this)
+
 fun YoutubeVideoUrl.validate() {
     validateYoutubeUrl(this)
 }
 
-val YoutubeVideoUrl.mobile: YoutubeVideoUrl
-    get() {
-        return "https://youtu.be/${id}"
-    }
+val YoutubeVideoUrl.short: YoutubeVideoUrl
+    get() = shortUrl(id)
 
 val YoutubeVideoUrl.embed: YoutubeVideoUrl
-    get() {
-        return "https://www.youtube.com/embed/${id}"
-    }
+    get() = embedUrl(id)
+
+val YoutubeVideoUrl.normal: YoutubeVideoUrl
+    get() = normalUrl(id)
 
 const val YOUTUBE_ID_LENGTH = 11
 
 val YOUTUBE_REGEX =
-    "(?:(?:https?:)?//)?(?:(?:www\\.|m\\.)?youtube(?:-nocookie)?\\.com|youtu\\.?be)/(?:watch\\?v=|embed/|v/)?(?<id>[\\w\\-]{10,12})[^&?]*.*".toRegex()
+    "(?:(?:https?:)?//)?(?:(?:www\\.|m\\.)?youtube(?:-nocookie)?\\.com|youtu\\.?be)/(?:attribution_link\\?[au]=[^/]*/)?(?:watch\\?v=|embed/|v/|watch/)?(?<id>[\\w\\-]{10,12})[^&?]*.*".toRegex()
 
 fun isValidYoutube(url: YoutubeVideoUrl): Boolean {
     return url.matches(YOUTUBE_REGEX) && youtubeId(url).length == YOUTUBE_ID_LENGTH
@@ -56,6 +58,17 @@ fun youtubeId(url: YoutubeVideoUrl): String {
     return youtubeIdOrNull(url) ?: error("id not found for url: $url")
 }
 
+fun shortUrl(id: String): String {
+    return "https://youtu.be/${id}"
+}
+
+fun embedUrl(id: String): String {
+    return "https://www.youtube.com/embed/${id}"
+}
+
+fun normalUrl(id: String): String {
+    return "https://www.youtube.com/watch?v=${id}"
+}
 
 
 

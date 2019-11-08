@@ -27,6 +27,26 @@ http://youtube.com/v/dQw4w9WgXcQ?feature=youtube_gdata_player
 http://www.youtube.com/watch?v=dQw4w9WgXcQ&feature=youtube_gdata_player
 http://youtube.com/watch?v=dQw4w9WgXcQ&feature=youtube_gdata_player
 http://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_player'
+http://www.youtube.com/watch?v=iwGFalTRHDA 
+https://www.youtube.com/watch?v=iwGFalTRHDA 
+http://www.youtube.com/watch?v=iwGFalTRHDA&feature=related 
+http://youtu.be/iwGFalTRHDA
+http://www.youtube.com/watch?v=iwGFalTRHDA
+www.youtube.com/watch?v=iwGFalTRHDA
+youtu.be/iwGFalTRHDA 
+youtube.com/watch?v=iwGFalTRHDA 
+http://www.youtube.com/watch/iwGFalTRHDA
+http://www.youtube.com/v/iwGFalTRHDA
+http://www.youtube.com/v/i_GFalTRHDA
+http://www.youtube.com/watch?v=i-GFalTRHDA&feature=related 
+http://www.youtube.com/attribution_link?u=/watch?v=aGmiw_rrNxk&feature=share&a=9QlmP1yvjcllp0h3l0NwuA
+http://www.youtube.com/attribution_link?a=fF1CWYwxCQ4&u=/watch?v=qYr8opTPSaQ&feature=em-uploademail
+http://www.youtube.com/attribution_link?a=fF1CWYwxCQ4&feature=em-uploademail&u=/watch?v=qYr8opTPSaQ
+""".trimIndent()
+
+val shouldBeValid = """
+http://www.youtube.com/watch?feature=player_embedded&v=iwGFalTRHDA
+http://www.youtube.com/embed/watch?feature=player_embedded&v=iwGFalTRHDA
 """.trimIndent()
 
 class YoutubeVideoUrlTest {
@@ -95,9 +115,11 @@ class YoutubeVideoUrlTest {
         assertEquals(YOUTUBE_ID_LENGTH, id.length)
         assertEquals(id, expectedId)
         url.validate()
-        assertEquals(url.id, url.mobile.id)
+        assertEquals(url.id, url.short.id)
         assertEquals(url.id, url.embed.id)
-        assertEquals(url.mobile.id, url.embed.id)
+        assertEquals(url.id, url.normal.id)
+        assertEquals(url.short.id, url.embed.id)
+
     }
 
 

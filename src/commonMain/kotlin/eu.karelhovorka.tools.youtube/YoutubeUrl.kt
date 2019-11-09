@@ -29,8 +29,8 @@ const val YOUTUBE_ID_LENGTH = 11
 val YOUTUBE_REGEX =
     "(?:(?:https?:)?//)?(?:(?:www\\.|m\\.)?youtube(?:-nocookie)?\\.com|youtu\\.?be)/(?:attribution_link\\?[au]=[^/]*/)?(?:watch\\?v=|embed/|v/|watch/)?(?<id>[\\w\\-]{10,12})[^&?]*.*".toRegex()
 
-fun isValidYoutube(url: YoutubeVideoUrl): Boolean {
-    return url.matches(YOUTUBE_REGEX) && youtubeId(url).length == YOUTUBE_ID_LENGTH
+fun isValidYoutube(url: YoutubeVideoUrl?): Boolean {
+    return url != null && url.matches(YOUTUBE_REGEX) && youtubeId(url).length == YOUTUBE_ID_LENGTH
 }
 
 fun validateYoutubeUrl(url: YoutubeVideoUrl) {

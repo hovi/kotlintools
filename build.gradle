@@ -6,6 +6,7 @@ buildscript {
         maven { url 'https://maven.google.com' }
         maven { url "https://plugins.gradle.org/m2/" }
         google()
+        maven { url "https://jitpack.io" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.2'
@@ -26,12 +27,12 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
-group 'eu.karelhovorka.kotlintools'
-version '0.0.1'
+group 'com.github.hovi'
+version '0.0.2'
 
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 10
     sourceSets {
         main {
             manifest.srcFile 'src/androidMain/AndroidManifest.xml'

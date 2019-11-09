@@ -1,0 +1,21 @@
+package eu.karelhovorka.tools.random
+
+import kotlin.random.Random
+import kotlin.test.Test
+import kotlin.test.assertTrue
+
+
+class RandomTest {
+    @Test
+    fun randomString() {
+        repeat(50) {
+            val size = 10
+            assertStringMatchesRegex(Random.nextString(size), ("[A-Z0-9]{${size}}".toRegex()))
+        }
+    }
+
+    fun assertStringMatchesRegex(text: String, regex: Regex) {
+        assertTrue(text.matches(regex))
+    }
+
+}

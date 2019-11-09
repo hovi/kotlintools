@@ -19,7 +19,7 @@ plugins {
 }
 
 
-apply plugin: 'com.android.library'
+//apply plugin: 'com.android.library'
 
 
 repositories {
@@ -31,14 +31,6 @@ group 'com.github.hovi'
 version '0.0.2'
 
 
-android {
-    compileSdkVersion 10
-    sourceSets {
-        main {
-            manifest.srcFile 'src/androidMain/AndroidManifest.xml'
-        }
-    }
-}
 
 kotlin {
     jvm("jvm")
@@ -47,9 +39,6 @@ kotlin {
         }
         nodejs {
         }
-    }
-    android() {
-
     }
     sourceSets {
         commonMain {

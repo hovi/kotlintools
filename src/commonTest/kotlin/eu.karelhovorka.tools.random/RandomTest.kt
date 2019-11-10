@@ -6,11 +6,13 @@ import kotlin.test.assertTrue
 
 
 class RandomTest {
+    val seed = 0
+
     @Test
     fun randomString() {
         repeat(50) {
             val size = 10
-            assertStringMatchesRegex(Random.nextString(size), ("[A-Z0-9]{${size}}".toRegex()))
+            assertStringMatchesRegex(Random(seed = seed).nextString(size), ("[A-Z0-9]{${size}}".toRegex()))
         }
     }
 

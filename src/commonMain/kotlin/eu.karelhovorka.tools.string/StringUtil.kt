@@ -1,7 +1,5 @@
 package eu.karelhovorka.tools.string
 
-const val accented__ = "áäčďéěíĺľňóôöŕšťúůüýřžÁÄČĎÉĚÍĹĽŇÓÔÖŔŠŤÚŮ ÜÝŘŽ"
-const val unaccented = "aacdeeillnooorstuuuyrzAACDEEILLNOOORSTUU UYRZ"
 
 val accentsToNormal: Map<Char, Char> = accented__.mapIndexed { index, c ->
     c to unaccented[index]
@@ -17,8 +15,8 @@ fun String.removeAccents(): String {
     return result
 }
 
-fun createId(name: String): String {
-    return (name.removeAccents()).toLowerCase().replace(" ".toRegex(), "-")
+fun String.createId(whitespaceReplacement: String = "-"): String {
+    return (this.removeAccents()).toLowerCase().replace("\\s+".toRegex(), whitespaceReplacement)
 }
 
 fun Char.removeAccent(): Char {

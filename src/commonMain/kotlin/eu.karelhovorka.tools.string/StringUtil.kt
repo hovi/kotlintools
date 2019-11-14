@@ -17,6 +17,10 @@ fun String.removeAccents(): String {
     return result
 }
 
+fun createId(name: String): String {
+    return (name.removeAccents()).toLowerCase().replace(" ".toRegex(), "-")
+}
+
 fun Char.removeAccent(): Char {
     return accentsToNormal.getOrElse(this, { this })
 }

@@ -30,6 +30,9 @@ class StringUtilTest {
     @Test
     fun createId() {
         assertEquals("slunecni-hrob", "Sluneční hrob".createId())
+        assertEquals("slunecni-hrob", """
+            |Sluneční 
+            |hrob""".trimMargin().createId())
     }
 
 

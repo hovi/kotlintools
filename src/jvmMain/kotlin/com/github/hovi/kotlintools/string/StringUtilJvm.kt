@@ -1,6 +1,8 @@
 package com.github.hovi.kotlintools.string
 
+import com.github.hovi.kotlintools.collection.UTF_INVALID_CHARACTER_BYTES
 import java.text.Normalizer
+import kotlin.text.Charsets.UTF_8
 
 fun String.removeAccentsJvm(): String {
     return Normalizer.normalize(
@@ -17,4 +19,10 @@ fun forEachUnicodeLetter(block: (String) -> Unit) {
             block(character)
         }
     }
+}
+
+val INVALID_CHARACTER = String(UTF_INVALID_CHARACTER_BYTES, UTF_8)
+
+fun String.isIncorrectlyEncoded(): Boolean {
+    return contains(INVALID_CHARACTER)
 }

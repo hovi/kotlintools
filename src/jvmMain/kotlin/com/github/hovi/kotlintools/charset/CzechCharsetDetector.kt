@@ -12,6 +12,8 @@ import kotlin.text.Charsets.UTF_8
 
 val CP1250: Charset = Charset.forName("CP1250")
 
+val IBM852: Charset = Charset.forName("IBM852")
+
 val ISO_8859_2: Charset = Charset.forName("ISO-8859-2")
 
 
@@ -55,7 +57,7 @@ enum class ResultComparator : Comparator<DetectionResult> {
 
 }
 
-class UTFCharsetDetector() : CharsetDetector(UTF_8, priority = 10) {
+class UTFCharsetDetector : CharsetDetector(UTF_8, priority = 10) {
 
     override fun autoreject(text: ByteArray): Boolean {
         return text.countSubArray(UTF_INVALID_CHARACTER_BYTES) > 0
@@ -64,7 +66,7 @@ class UTFCharsetDetector() : CharsetDetector(UTF_8, priority = 10) {
 
 open class CharsetDetector(val charset: Charset, val priority: Int = 0) {
 
-    val charsetLetters = CharsetLetters(charset)
+    private val charsetLetters = CharsetLetters(charset)
 
     fun detect(text: ByteArray): DetectionResult {
         if (autoreject(text)) {
@@ -93,25 +95,36 @@ open class CharsetDetector(val charset: Charset, val priority: Int = 0) {
     }
 }
 
+val presetDetectors = arrayOf(
+    UTFCharsetDetector(),
+    CharsetDetector(CP1250, 5),
+    CharsetDetector(ISO_8859_2, priority = 4),
+    CharsetDetector(IBM852, priority = 3)
+)
+
 object CzechCharsetDetector {
 
     fun guessCharset(
-        rawData: ByteArray, detectors: Array<CharsetDetector> = arrayOf(
-            CharsetDetector(CP1250, 5),
-            CharsetDetector(ISO_8859_2),
-            UTFCharsetDetector()
-        )
+        rawData: ByteArray, detectors: Array<CharsetDetector> = presetDetectors
     ): List<DetectionResult> {
         return detectors.map { it.detect(rawData) }.sortedWith(ResultComparator.INSTANCE)
     }
 
-    fun smartRead(inputStream: InputStream, default: Charset = UTF_8): String {
+    fun smartRead(
+        inputStream: InputStream,
+        detectors: Array<CharsetDetector> = presetDetectors,
+        default: Charset = UTF_8
+    ): String {
         val rawData = inputStream.use { it.readBytes() }
-        return String(rawData, guessCharset(rawData).firstOrNull()?.charset ?: default)
+        return String(rawData, guessCharset(rawData, detectors = detectors).firstOrNull()?.charset ?: default)
     }
 
-    fun smartRead(rawData: ByteArray, default: Charset = UTF_8): String {
-        val charset = guessCharset(rawData).firstOrNull()?.charset ?: default
+    fun smartRead(
+        rawData: ByteArray,
+        detectors: Array<CharsetDetector> = presetDetectors,
+        default: Charset = UTF_8
+    ): String {
+        val charset = guessCharset(rawData, detectors = detectors).firstOrNull()?.charset ?: default
         return String(rawData, charset)
     }
 }

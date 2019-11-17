@@ -61,7 +61,7 @@ class CzechCharsetDetectorTest {
 
     @Test
     fun testFiles() {
-        val charsets = arrayOf(UTF_8, CP1250, ISO_8859_2)
+        val charsets = presetDetectors.map { it.charset }
         charsets.forEach {
             val file = File("src/jvmTest/resources/txt/charset_${it.name()}.txt")
             val bytes = file.readBytes()

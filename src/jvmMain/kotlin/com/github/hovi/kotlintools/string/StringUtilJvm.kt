@@ -1,6 +1,6 @@
 package com.github.hovi.kotlintools.string
 
-import com.github.hovi.kotlintools.collection.UTF_INVALID_CHARACTER_BYTES
+import com.github.hovi.kotlintools.collection.UTF8_INVALID_CHARACTER_BYTES
 import java.text.Normalizer
 import kotlin.text.Charsets.UTF_8
 
@@ -21,7 +21,7 @@ fun forEachUnicodeLetter(block: (String) -> Unit) {
     }
 }
 
-val INVALID_CHARACTER = String(UTF_INVALID_CHARACTER_BYTES, UTF_8)
+val INVALID_CHARACTER = String(UTF8_INVALID_CHARACTER_BYTES, UTF_8)
 
 fun String.isIncorrectlyEncoded(): Boolean {
     return contains(INVALID_CHARACTER)

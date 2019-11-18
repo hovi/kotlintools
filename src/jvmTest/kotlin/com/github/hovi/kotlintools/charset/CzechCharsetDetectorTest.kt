@@ -1,7 +1,7 @@
 package com.github.hovi.kotlintools.charset
 
 
-import com.github.hovi.kotlintools.charset.CzechCharsetDetector.smartRead
+import com.github.hovi.kotlintools.charset.CzechCharsetDetector.Companion.presetDetectors
 import com.github.hovi.kotlintools.string.isIncorrectlyEncoded
 import org.junit.Assert
 import java.io.File
@@ -65,7 +65,7 @@ class CzechCharsetDetectorTest {
         charsets.forEach {
             val file = File("src/jvmTest/resources/txt/charset_${it.name()}.txt")
             val bytes = file.readBytes()
-            assertEquals(it, CzechCharsetDetector.guessCharset(bytes).first().charset)
+            assertEquals(it, CzechCharsetDetector().detect(bytes).first().charset)
         }
     }
 
@@ -84,5 +84,9 @@ class CzechCharsetDetectorTest {
         assertEquals(upper, smartRead(upper.toByteArray(CP1250)))
         assertEquals(upper, smartRead(upper.toByteArray(ISO_8859_2)))
         assertEquals(upper, smartRead(upper.toByteArray(UTF_8)))
+    }
+
+    private fun smartRead(byteArray: ByteArray): String {
+        return CzechCharsetDetector().smartRead(byteArray)
     }
 }

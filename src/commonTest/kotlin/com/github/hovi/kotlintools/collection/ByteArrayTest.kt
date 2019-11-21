@@ -21,5 +21,7 @@ class ByteArrayTest {
         assertEquals(1, byteArrayOf(1, 2, 3).countSubArray(byteArrayOf(1, 2, 3)))
         assertEquals(1, byteArrayOf(1, 2, 3).countSubArray(byteArrayOf(1, 2)))
         assertEquals(3, byteArrayOf(1, 1, 1).countSubArray(byteArrayOf(1)))
+        assertEquals(0, byteArrayOf(1, 1, 1).countSubArray(byteArrayOf()))
+        assertEquals(3, byteArrayOf(1, 2, 3, 4, 5, 1, 2, 1, 3, 2, 1, 2).countSubArray(byteArrayOf(1, 2)))
     }
 }

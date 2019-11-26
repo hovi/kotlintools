@@ -1,9 +1,13 @@
 package com.github.hovi.kotlintools.exception
 
+import com.github.hovi.kotlintools.io.printlnErr
 import kotlin.reflect.KClass
 
 
-var globalLogger: (Throwable) -> Unit = {}
+var globalLogger: (Throwable) -> Unit = {
+    printlnErr("Swalloed throwable:")
+    printlnErr(it)
+}
 
 inline fun <reified E : Throwable, T : Any?> swallowIfException(
     noinline log: (E) -> Unit = globalLogger,

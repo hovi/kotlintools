@@ -1,7 +1,8 @@
 package com.github.hovi.kotlintools.charset
 
 
-import com.github.hovi.kotlintools.charset.CzechCharsetDetector.Companion.presetDetectors
+import com.github.hovi.kotlintools.charset.CharsetDetector.Companion.CZECH_CHARSET_DETECTOR
+import com.github.hovi.kotlintools.charset.CharsetDetector.Companion.CZECH_CHAR_COUNTERS
 import com.github.hovi.kotlintools.string.isIncorrectlyEncoded
 import org.junit.Assert
 import java.io.File
@@ -9,12 +10,14 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.text.Charsets.UTF_8
 
-var CZECH_TEXT_LOWER = "příliš žluťoučký kůň úpěl ďábelské ódy"
+const val CZECH_TEXT_LOWER = "příliš žluťoučký kůň úpěl ďábelské ódy"
 
-var CZECH_TEXT_UPPER = "PŘÍLIŠ ŽLUŤOUČKÝ KŮŇ ÚPĚL ĎÁBELSKÉ ÓDY"
+const val CZECH_TEXT_UPPER = "PŘÍLIŠ ŽLUŤOUČKÝ KŮŇ ÚPĚL ĎÁBELSKÉ ÓDY"
+
+const val RERICHA = "řeřicha"
 
 
-class CzechCharsetDetectorTest {
+class CharsetDetectorTest {
     private val cp: ByteArray = CZECH_TEXT_LOWER.toByteArray(CP1250)
     private val iso: ByteArray = CZECH_TEXT_LOWER.toByteArray(ISO_8859_2)
     private val utf: ByteArray = CZECH_TEXT_LOWER.toByteArray(UTF_8)
@@ -23,7 +26,7 @@ class CzechCharsetDetectorTest {
     fun testGuessEncoding() {
         testText(CZECH_TEXT_LOWER)
         testText(CZECH_TEXT_UPPER)
-        testText("řeřicha")
+        testText(RERICHA)
     }
 
     @Test
@@ -42,8 +45,8 @@ class CzechCharsetDetectorTest {
 
     @Test
     fun testSingleCharacterSk() {
-        val text: String = "ÄäÔôĹĺľĽ"
-        for (i in 0 until text.length) {
+        val text = "ÄäÔôĹĺľĽ"
+        for (i in text.indices) {
             testText(text.substring(i, i + 1))
         }
     }
@@ -60,12 +63,17 @@ class CzechCharsetDetectorTest {
     }
 
     @Test
+    fun testIBM852() {
+        assertEquals(CZECH_TEXT_LOWER, smartRead(CZECH_TEXT_LOWER.toByteArray(IBM852)))
+    }
+
+    @Test
     fun testFiles() {
-        val charsets = presetDetectors.map { it.charset }
+        val charsets = CZECH_CHAR_COUNTERS.map { it.charset }
         charsets.forEach {
             val file = File("src/jvmTest/resources/txt/charset_${it.name()}.txt")
             val bytes = file.readBytes()
-            assertEquals(it, CzechCharsetDetector().detect(bytes).first().charset)
+            assertEquals(it, CZECH_CHARSET_DETECTOR.detect(bytes).first().charset)
         }
     }
 
@@ -76,17 +84,20 @@ class CzechCharsetDetectorTest {
         assertEquals(text, smartRead(text.toByteArray(CP1250)))
         assertEquals(text, smartRead(text.toByteArray(ISO_8859_2)))
         assertEquals(text, smartRead(text.toByteArray(UTF_8)))
+        assertEquals(text, smartRead(text.toByteArray(IBM852)))
         val lower = text.toLowerCase()
         assertEquals(lower, smartRead(lower.toByteArray(CP1250)))
         assertEquals(lower, smartRead(lower.toByteArray(ISO_8859_2)))
         assertEquals(lower, smartRead(lower.toByteArray(UTF_8)))
+        //assertEquals(lower, smartRead(lower.toByteArray(IBM852)))
         val upper = text.toUpperCase()
         assertEquals(upper, smartRead(upper.toByteArray(CP1250)))
         assertEquals(upper, smartRead(upper.toByteArray(ISO_8859_2)))
         assertEquals(upper, smartRead(upper.toByteArray(UTF_8)))
+        //assertEquals(upper, smartRead(upper.toByteArray(IBM852)))
     }
 
     private fun smartRead(byteArray: ByteArray): String {
-        return CzechCharsetDetector().smartRead(byteArray)
+        return CZECH_CHARSET_DETECTOR.smartRead(byteArray)
     }
 }

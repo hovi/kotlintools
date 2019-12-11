@@ -13,8 +13,8 @@ fun ByteArray.countSubArray(subarray: ByteArray): Int {
     var found: Boolean
     this.forEachIndexed { index, byte ->
         found = true
-        subarray.forEachIndexed { subindex, subbyte ->
-            if (index + subindex >= size || subbyte != this[index + subindex]) {
+        subarray.forEachIndexed { subIndex, subByte ->
+            if (index + subIndex >= size || subByte != this[index + subIndex]) {
                 found = false
             }
         }
@@ -29,8 +29,8 @@ fun ByteArray.startsWith(anotherArray: ByteArray): Boolean {
     if (anotherArray.size > this.size) {
         return false
     }
-    anotherArray.forEachIndexed { index, t ->
-        if (this[index] != t) {
+    anotherArray.forEachIndexed { index, byte ->
+        if (this[index] != byte) {
             return false
         }
     }

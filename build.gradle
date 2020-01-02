@@ -36,7 +36,7 @@ repositories {
 }
 
 group 'com.github.hovi'
-version '0.0.6'
+version '0.0.7'
 
 
 android {
@@ -59,6 +59,11 @@ android {
 
 kotlin {
     android("android")
+    iosX64("ios") {
+        binaries {
+            framework()
+        }
+    }
     jvm("jvm")
     js {
         browser {
@@ -109,6 +114,28 @@ kotlin {
             dependencies {
                 implementation kotlin('test-js')
             }
+        }
+        iosMain {
+        }
+        iosTest {
+        }
+    }
+}
+
+
+task copyFramework {
+    def buildType = project.findProperty('kotlin.build.type') ?: 'DEBUG'
+    def target = project.findProperty('kotlin.target') ?: 'ios'
+    dependsOn kotlin.targets."$target".binaries.getFramework(buildType).linkTask
+
+    doLast {
+        def srcFile = kotlin.targets."$target".binaries.getFramework(buildType).outputFile
+        def targetDir = getProperty('configuration.build.dir')
+        copy {
+            from srcFile.parent
+            into targetDir
+            include 'app.framework/**'
+            include 'app.framework.dSYM'
         }
     }
 }

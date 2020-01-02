@@ -29,15 +29,15 @@ internal fun <E : Event> retypeCallback(callback: (E) -> Unit): (Event) -> Unit 
     }
 }
 
-fun Element.addClickListener(callback: ((MouseEvent) -> Unit)) {
-    return this.addEventListener(type = "click", callback = retypeCallback(callback))
+fun Element.addClickListener(callback: (MouseEvent) -> Unit) {
+    return this.addMouseListener(type = "click", callback = callback)
 }
 
-fun Element.addMouseListener(type: String, callback: ((MouseEvent) -> Unit)) {
+fun Element.addMouseListener(type: String, callback: (MouseEvent) -> Unit) {
     return this.addEventListener(type = type, callback = retypeCallback(callback))
 }
 
-fun Element.addKeyboardListener(type: String, callback: ((KeyboardEvent) -> Unit)) {
+fun Element.addKeyboardListener(type: String, callback: (KeyboardEvent) -> Unit) {
     return this.addEventListener(type = type, callback = retypeCallback(callback))
 }
 

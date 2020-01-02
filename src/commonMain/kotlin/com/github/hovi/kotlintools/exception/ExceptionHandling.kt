@@ -51,3 +51,10 @@ inline fun <T : Any?> swallow(
         return null
     }
 }
+
+inline fun npe(variable: String, message: String? = null): Nothing {
+    if (message != null) {
+        throw NullPointerException(message)
+    }
+    throw NullPointerException("Variable $variable is null. $message")
+}

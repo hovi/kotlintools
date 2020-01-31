@@ -36,7 +36,7 @@ repositories {
 }
 
 group 'com.github.hovi'
-version '0.0.7'
+version '0.0.8'
 
 
 android {
@@ -66,8 +66,8 @@ kotlin {
     }
     jvm("jvm")
     js {
-        browser {
-        }
+        /*browser {
+        }*/
         /*nodejs {
         }*/
     }

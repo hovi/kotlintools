@@ -7,11 +7,6 @@ object I18N {
 
     var currentLang = defaultLanguage
 
-    fun setLang(lang: String?) {
-        if (lang != null) {
-            currentLang = lang
-        }
-    }
 }
 
 val transByLang = mutableMapOf<String, MutableMap<String, String>>(
@@ -32,5 +27,15 @@ fun String.i18n(lang: String = I18N.currentLang, vararg arguments: Any?): String
 }
 
 private fun _i18n(message: String, lang: String = I18N.currentLang, vararg arguments: Any?): String {
-    return transByLang.get(lang)?.get(message) ?: "_$message($lang)_".apply { println("Missing: $this") }
+    return transByLang[lang]?.get(message) ?: missingMessage(message, lang, arguments)
 }
+
+val notifyMissingTranslation: (String, String, Array<out Any?>) -> String = { message, lang, arguments ->
+    "_$message($lang)_".apply { println("Missing: $this") }
+}
+
+val defaultToMessage: (String, String, Array<out Any?>) -> String = { message, lang, arguments ->
+    "_$message($lang)_".apply { println("Missing: $this") }
+}
+
+var missingMessage: (String, String, Array<out Any?>) -> String = notifyMissingTranslation

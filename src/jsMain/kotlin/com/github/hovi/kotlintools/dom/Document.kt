@@ -5,6 +5,10 @@ import com.github.hovi.kotlintools.exception.swallow
 import org.w3c.dom.*
 import kotlin.reflect.KClass
 
+inline fun <reified E : Element> Document.queryHtmlSelectorAll(selectors: String): List<E> {
+    return this.querySelectorAll(selectors = selectors).asElementList()
+}
+
 inline fun <reified E : HTMLElement> Document.getHtmlElementById(id: String): E {
     return this.getHtmlElementByIdOrNull(id) ?: npe(id, "Could not find element by id $id")
 }

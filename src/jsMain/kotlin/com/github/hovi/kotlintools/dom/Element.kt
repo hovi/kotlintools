@@ -6,21 +6,21 @@ import org.w3c.dom.events.KeyboardEvent
 import org.w3c.dom.events.MouseEvent
 
 
-inline fun <reified E : Element> E.queryHtmlSelectorAll(selectors: String): List<E> {
+inline fun <reified E : Element> Element.queryHtmlSelectorAll(selectors: String): List<E> {
     return this.querySelectorAll(selectors = selectors).asElementList()
 }
 
-inline fun <reified E : Element> E.queryHtmlSelectorOrNull(selectors: String): E? {
+inline fun <reified E : Element> Element.queryHtmlSelectorOrNull(selectors: String): E? {
     return this.querySelector(selectors = selectors) as E?
 }
 
-inline fun <reified E : Element> E.queryHtmlSelector(selectors: String): E {
+inline fun <reified E : Element> Element.queryHtmlSelector(selectors: String): E {
     return this.queryHtmlSelectorOrNull(selectors = selectors)
         ?: error("couldn't find element by selectors '$selectors'")
 }
 
-inline fun <reified E : Element> E.qsAll(selectors: String): List<E> = this.queryHtmlSelectorAll(selectors)
-inline fun <reified E : Element> E.qs(selectors: String): E = this.queryHtmlSelector(selectors)
+inline fun <reified E : Element> Element.qsAll(selectors: String): List<E> = this.queryHtmlSelectorAll(selectors)
+inline fun <reified E : Element> Element.qs(selectors: String): E = this.queryHtmlSelector(selectors)
 
 
 internal fun <E : Event> retypeCallback(callback: (E) -> Unit): (Event) -> Unit {

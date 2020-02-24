@@ -32,7 +32,7 @@ inline fun <reified E : HTMLElement> Document.createHtmlElement(): E {
 
 }
 
-val htmlElementClassesToTagNames = swallow {
+val htmlElementClassesToTagNames = swallow(log = {}) {
     mapOf<KClass<out HTMLElement>, String>(
         HTMLDivElement::class to "div",
         HTMLSpanElement::class to "span",

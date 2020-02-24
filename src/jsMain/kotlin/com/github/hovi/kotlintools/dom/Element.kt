@@ -82,3 +82,11 @@ var Element?.formValue: String
             else -> error("Element '$this' cannot set value")
         }
     }
+
+fun Element.scrollIntoView(behavior: String = "smooth", block: String = "start", inline: String = "nearest") {
+    val obj = js("{}")
+    obj["behavior"] = behavior
+    obj["block"] = block
+    obj["inline"] = inline
+    scrollIntoView(obj)
+}

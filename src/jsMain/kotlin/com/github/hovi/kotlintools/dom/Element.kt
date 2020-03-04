@@ -90,3 +90,7 @@ fun Element.scrollIntoView(behavior: String = "smooth", block: String = "start",
     obj["inline"] = inline
     scrollIntoView(obj)
 }
+
+fun Element.isFormElement(): Boolean {
+    return tagName.toUpperCase() in arrayOf("INPUT", "SELECT", "TEXTAREA", "BUTTON")
+}

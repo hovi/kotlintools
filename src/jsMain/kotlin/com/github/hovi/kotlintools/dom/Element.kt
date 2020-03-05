@@ -2,6 +2,7 @@ package com.github.hovi.kotlintools.dom
 
 import org.w3c.dom.*
 import org.w3c.dom.events.Event
+import org.w3c.dom.events.EventTarget
 import org.w3c.dom.events.KeyboardEvent
 import org.w3c.dom.events.MouseEvent
 import kotlin.dom.addClass
@@ -35,12 +36,31 @@ fun Element.addClickListener(callback: (MouseEvent) -> Unit) {
     return this.addMouseListener(type = "click", callback = callback)
 }
 
+fun <E : Event> EventTarget.addTypedEventListener(type: String, callback: ((E) -> Unit)) {
+    addEventListener(type, retypeCallback(callback))
+}
+
+fun Element.throttleClick(milliseconds: Int = 100, callback: (MouseEvent) -> Unit) {
+    return addTypedEventListener<MouseEvent>("click", throttleEvent({event ->
+        enableDisableWrapper(this, event, callback)
+    }, milliseconds))
+}
+
+fun <E: Event> enableDisableWrapper(element: Element, event: E, callback: (E) -> Unit) {
+    try {
+        element.disable(backup = true)
+        callback(event)
+    } finally {
+        element.enable(restore = true)
+    }
+}
+
 fun Element.addMouseListener(type: String, callback: (MouseEvent) -> Unit) {
-    return this.addEventListener(type = type, callback = retypeCallback(callback))
+    return this.addTypedEventListener(type = type, callback = callback)
 }
 
 fun Element.addKeyboardListener(type: String, callback: (KeyboardEvent) -> Unit) {
-    return this.addEventListener(type = type, callback = retypeCallback(callback))
+    return this.addTypedEventListener(type = type, callback = callback)
 }
 
 var Element?.formValue: String

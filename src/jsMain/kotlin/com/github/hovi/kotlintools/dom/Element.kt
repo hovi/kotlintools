@@ -40,19 +40,20 @@ fun <E : Event> EventTarget.addTypedEventListener(type: String, callback: ((E) -
     addEventListener(type, retypeCallback(callback))
 }
 
-fun Element.throttleClick(milliseconds: Int = 100, callback: (MouseEvent) -> Unit) {
-    return addTypedEventListener<MouseEvent>("click", throttleEvent({event ->
-        enableDisableWrapper(this, event, callback)
-    }, milliseconds))
-}
-
-fun <E: Event> enableDisableWrapper(element: Element, event: E, callback: (E) -> Unit) {
-    try {
-        element.disable(backup = true)
-        callback(event)
-    } finally {
-        element.enable(restore = true)
-    }
+fun Element.throttleClick(milliseconds: Int = 500, callback: (MouseEvent) -> Unit) {
+    return addTypedEventListener<MouseEvent>(
+        "click",
+        throttleEvent(
+            milliseconds = milliseconds,
+            finished = {
+                enable()
+            },
+            callback = { event ->
+                disable()
+                callback(event)
+            }
+        )
+    )
 }
 
 fun Element.addMouseListener(type: String, callback: (MouseEvent) -> Unit) {

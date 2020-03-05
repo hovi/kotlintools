@@ -18,16 +18,20 @@ fun <E : Event> debounceEvent(callback: (E) -> Unit, milliseconds: Int, immediat
     }
 }
 
-fun <E : Event> throttleEvent(callback: (E) -> Unit, milliseconds: Int = 250): (E) -> Unit {
+fun <E : Event> throttleEvent(
+    milliseconds: Int,
+    finished: () -> Unit = {},
+    callback: (E) -> Unit
+): (E) -> Unit {
     var inThrottle = false
-
     return fun(event: E) {
         if (inThrottle) {
             return
         }
-        callback(event)
         inThrottle = true
+        callback(event)
         window.setTimeout({
+            finished()
             inThrottle = false
         }, milliseconds)
 

@@ -4,6 +4,8 @@ import org.w3c.dom.*
 import org.w3c.dom.events.Event
 import org.w3c.dom.events.KeyboardEvent
 import org.w3c.dom.events.MouseEvent
+import kotlin.dom.addClass
+import kotlin.dom.removeClass
 
 
 inline fun <reified E : Element> Element.queryHtmlSelectorAll(selectors: String): List<E> {
@@ -93,4 +95,41 @@ fun Element.scrollIntoView(behavior: String = "smooth", block: String = "start",
 
 fun Element.isFormElement(): Boolean {
     return tagName.toUpperCase() in arrayOf("INPUT", "SELECT", "TEXTAREA", "BUTTON")
+}
+
+fun Element.disable(backup: Boolean = true) {
+    if (backup) {
+        backupAttributeIfExists("tabindex")
+        backupAttributeIfExists("href")
+    }
+    setAttribute("tabindex", "-1")
+    setAttribute("disabled", "true")
+    addClass("disabled")
+    removeAttribute("href")
+}
+
+fun Element.enable(restore: Boolean = true) {
+    removeAttribute("tabindex")
+    removeAttribute("disabled")
+    removeClass("disabled")
+    if (restore) {
+        restoreAttributeBackup("tabindex")
+        restoreAttributeBackup("href")
+    }
+}
+
+private fun Element.backupAttributeIfExists(attr: String): String? {
+    getAttribute(attr)?.let {
+        setAttribute("data-attr-backup-$attr", it)
+        return it
+    }
+    return null
+}
+
+private fun Element.restoreAttributeBackup(attr: String): String? {
+    getAttribute("data-attr-backup-$attr")?.let {
+        setAttribute(attr, it)
+        return it
+    }
+    return null
 }

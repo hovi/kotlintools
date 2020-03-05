@@ -3,7 +3,7 @@ package com.github.hovi.kotlintools.dom
 import org.w3c.dom.events.Event
 import kotlin.browser.window
 
-fun <E : Event> debounceEvent(callback: (Event) -> Unit, milliseconds: Int, immediate: Boolean = false): (E) -> Unit {
+fun <E : Event> debounceEvent(callback: (E) -> Unit, milliseconds: Int, immediate: Boolean = false): (E) -> Unit {
     var timeout: Int? = null
 
     return fun(event: E) {
@@ -18,7 +18,7 @@ fun <E : Event> debounceEvent(callback: (Event) -> Unit, milliseconds: Int, imme
     }
 }
 
-fun <E : Event> throttleEvent(callback: (Event) -> Unit, milliseconds: Int = 250): (E) -> Unit {
+fun <E : Event> throttleEvent(callback: (E) -> Unit, milliseconds: Int = 250): (E) -> Unit {
     var inThrottle = false
 
     return fun(event: E) {

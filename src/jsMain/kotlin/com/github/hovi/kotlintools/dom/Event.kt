@@ -29,11 +29,10 @@ fun <E : Event> throttleEvent(
             return
         }
         inThrottle = true
-        callback(event)
         window.setTimeout({
             finished()
             inThrottle = false
         }, milliseconds)
-
+        callback(event)
     }
 }

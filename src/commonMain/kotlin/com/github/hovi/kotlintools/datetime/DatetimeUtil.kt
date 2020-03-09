@@ -10,6 +10,10 @@ class TimeMeasure(var startTime: Long = timestamp) {
     fun end(): Long {
         return timestamp - startTime
     }
+
+    fun isRunningLongerThan(milliseconds: Long): Boolean {
+        return end() > milliseconds
+    }
 }
 
 

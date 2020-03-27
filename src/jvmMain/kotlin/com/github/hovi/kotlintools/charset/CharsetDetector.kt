@@ -95,7 +95,7 @@ open class CharsetCharCounter(
 fun CharsetDetector.smartRead(
     inputStream: InputStream
 ): String {
-    val rawData = inputStream.use { it.readBytes() }
+    val rawData = inputStream.readBytes()
     return String(rawData, detect(rawData).firstOrNull()?.charset ?: defaultCharset)
 }
 

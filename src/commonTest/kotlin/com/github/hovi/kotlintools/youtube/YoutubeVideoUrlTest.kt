@@ -76,12 +76,12 @@ class YoutubeVideoUrlTest {
         isInvalid("http://www.youtube.com/watch?v=asdf&feature=featured")
     }
 
-    private fun validateUrl(url: YoutubeVideoUrl) {
-        url.validate()
+    private fun validateUrl(url: String) {
+        YoutubeVideoUrl(url).validate()
     }
 
-    private fun isInvalid(url: YoutubeVideoUrl) {
-        assertFalse(url.isValid)
+    private fun isInvalid(url: String) {
+        assertFalse(YoutubeVideoUrl(url).isValid)
     }
 
     @Test
@@ -105,12 +105,14 @@ class YoutubeVideoUrlTest {
         )
     }
 
-    private fun validatePlaylist(url: YoutubeVideoUrl, expectedPlaylistId: String) {
+    private fun validatePlaylist(raw: String, expectedPlaylistId: String) {
+        val url = YoutubeVideoUrl(raw)
         assertTrue(url.isValid)
         //TODO:
     }
 
-    private fun validateId(url: YoutubeVideoUrl, expectedId: String) {
+    private fun validateId(raw: String, expectedId: String) {
+        val url = YoutubeVideoUrl(raw)
         val id = url.id
         assertEquals(YOUTUBE_ID_LENGTH, id.length)
         assertEquals(id, expectedId)

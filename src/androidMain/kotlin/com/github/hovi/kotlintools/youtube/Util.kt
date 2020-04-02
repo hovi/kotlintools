@@ -10,7 +10,7 @@ fun watchYoutubeVideoUri(id: String): Uri {
     return try {
         Uri.parse("vnd.youtube:$id")
     } catch (exception: ActivityNotFoundException) {
-        Uri.parse(normalUrl(id))
+        Uri.parse(YoutubeVideoUrl.normalUrl(id).raw)
     }
 }
 

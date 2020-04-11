@@ -13,11 +13,11 @@ inline fun <reified E : Element> Element.queryHtmlSelectorAll(selectors: String)
     return this.querySelectorAll(selectors = selectors).asElementList()
 }
 
-inline fun <reified E : Element> Element.queryHtmlSelectorOrNull(selectors: String): E? {
+inline fun <E : Element> Element.queryHtmlSelectorOrNull(selectors: String): E? {
     return this.querySelector(selectors = selectors) as E?
 }
 
-inline fun <reified E : Element> Element.queryHtmlSelector(selectors: String): E {
+inline fun <E : Element> Element.queryHtmlSelector(selectors: String): E {
     return this.queryHtmlSelectorOrNull(selectors = selectors)
         ?: error("couldn't find element by selectors '$selectors'")
 }

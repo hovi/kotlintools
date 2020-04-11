@@ -93,23 +93,24 @@ kotlin {
                 implementation kotlin('test-annotations-common')
             }
         }
-        androidMain {
-            dependencies {
-                implementation kotlin('stdlib')
-            }
-        }
-        androidTest {
-            dependencies {
-                implementation kotlin('test')
-                implementation kotlin('test-junit')
-            }
-        }
         jvmMain {
             dependencies {
                 implementation kotlin('stdlib-jdk7')
             }
         }
         jvmTest {
+            dependencies {
+                implementation kotlin('test')
+                implementation kotlin('test-junit')
+            }
+        }
+        androidMain {
+            dependsOn jvmMain
+            dependencies {
+                implementation kotlin('stdlib')
+            }
+        }
+        androidTest {
             dependencies {
                 implementation kotlin('test')
                 implementation kotlin('test-junit')

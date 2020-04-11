@@ -93,7 +93,20 @@ kotlin {
                 implementation kotlin('test-annotations-common')
             }
         }
+        jvmonlyMain {
+            dependencies {
+                implementation kotlin('stdlib-jdk7')
+            }
+        }
+        jvmsharedMain {
+            dependsOn commonMain
+            dependencies {
+                implementation kotlin('stdlib-jdk7')
+            }
+        }
         jvmMain {
+            dependsOn jvmsharedMain
+            dependsOn jvmonlyMain
             dependencies {
                 implementation kotlin('stdlib-jdk7')
             }
@@ -105,7 +118,7 @@ kotlin {
             }
         }
         androidMain {
-            dependsOn jvmMain
+            dependsOn jvmsharedMain
             dependencies {
                 implementation kotlin('stdlib')
             }

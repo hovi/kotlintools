@@ -33,7 +33,7 @@ repositories {
 }
 
 group 'com.github.hovi'
-version '0.0.19'
+version '0.0.20'
 
 
 android {
@@ -46,6 +46,9 @@ android {
         testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+        }
         release {
             minifyEnabled false
         }
@@ -140,6 +143,13 @@ kotlin {
     }
 }
 
+publishing {
+    publications {
+        kotlinMultiplatform {
+            artifactId = "kotlintools-f"
+        }
+    }
+}
 
 task copyFramework {
     def buildType = project.findProperty('kotlin.build.type') ?: 'DEBUG'

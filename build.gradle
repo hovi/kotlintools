@@ -33,7 +33,7 @@ repositories {
 }
 
 group 'com.github.hovi'
-version '0.0.17'
+version '0.0.18'
 
 
 android {

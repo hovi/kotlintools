@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.3.61'
+    ext.kotlin_version = '1.3.71'
     repositories {
         mavenCentral()
         google()
@@ -95,20 +95,20 @@ kotlin {
         }
         jvmonlyMain {
             dependencies {
-                implementation kotlin('stdlib-jdk7')
+                implementation kotlin('stdlib-jdk8')
             }
         }
         jvmsharedMain {
             dependsOn commonMain
             dependencies {
-                implementation kotlin('stdlib-jdk7')
+                implementation kotlin('stdlib-jdk8')
             }
         }
         jvmMain {
             dependsOn jvmsharedMain
             dependsOn jvmonlyMain
             dependencies {
-                implementation kotlin('stdlib-jdk7')
+                implementation kotlin('stdlib-jdk8')
             }
         }
         jvmTest {

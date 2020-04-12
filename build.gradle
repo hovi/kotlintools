@@ -93,11 +93,6 @@ kotlin {
                 implementation kotlin('test-annotations-common')
             }
         }
-        jvmonlyMain {
-            dependencies {
-                implementation kotlin('stdlib-jdk8')
-            }
-        }
         jvmsharedMain {
             dependsOn commonMain
             dependencies {
@@ -106,7 +101,6 @@ kotlin {
         }
         jvmMain {
             dependsOn jvmsharedMain
-            dependsOn jvmonlyMain
             dependencies {
                 implementation kotlin('stdlib-jdk8')
             }

@@ -1,3 +1,3 @@
 package com.github.hovi.kotlintools.annotations
 
-actual interface Serializable
+actual typealias Serializable = java.io.Serializable

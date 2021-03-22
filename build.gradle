@@ -1,25 +1,19 @@
 buildscript {
-    ext.kotlin_version = '1.4.0'
+    ext.kotlin_version = '1.4.32'
     repositories {
         mavenCentral()
         google()
         jcenter()
-        maven { url 'https://maven.fabric.io/public' }
         maven { url 'https://maven.google.com' }
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "https://jitpack.io" }
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
-    }
 }
 
 plugins {
-    id 'org.jetbrains.kotlin.multiplatform' version '1.4.0'
+    id 'org.jetbrains.kotlin.multiplatform' version '1.4.32'
     id "maven-publish"
 }
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android-extensions'
 
 
 repositories {
@@ -35,43 +29,7 @@ repositories {
 group 'com.github.hovi'
 version '0.0.21'
 
-
-android {
-    compileSdkVersion 28
-    defaultConfig {
-        minSdkVersion 10
-        targetSdkVersion 28
-        versionCode 1
-        versionName '1.0'
-        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-    }
-    buildTypes {
-        debug {
-            minifyEnabled false
-        }
-        release {
-            minifyEnabled false
-        }
-    }
-    sourceSets {
-        main {
-            manifest.srcFile 'src/androidMain/AndroidManifest.xml'
-            java.srcDirs = ['src/androidMain/kotlin']
-            res.srcDirs = ['src/androidMain/res']
-        }
-        androidTest {
-            java.srcDirs = ['src/androidTest/kotlin']
-            res.srcDirs = ['src/androidTest/res']
-        }
-    }
-}
-
-
 kotlin {
-    android() {
-        publishLibraryVariants("debug")
-        publishLibraryVariants("release")
-    }
     iosX64("ios") {
         binaries {
             framework()
@@ -109,18 +67,6 @@ kotlin {
             }
         }
         jvmTest {
-            dependencies {
-                implementation kotlin('test')
-                implementation kotlin('test-junit')
-            }
-        }
-        androidMain {
-            dependsOn jvmsharedMain
-            dependencies {
-                implementation kotlin('stdlib')
-            }
-        }
-        androidTest {
             dependencies {
                 implementation kotlin('test')
                 implementation kotlin('test-junit')

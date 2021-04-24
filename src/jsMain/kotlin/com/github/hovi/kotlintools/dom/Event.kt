@@ -1,7 +1,7 @@
 package com.github.hovi.kotlintools.dom
 
 import org.w3c.dom.events.Event
-import kotlin.browser.window
+import kotlinx.browser.window
 
 fun <E : Event> debounceEvent(callback: (E) -> Unit, milliseconds: Int, immediate: Boolean = false): (E) -> Unit {
     var timeout: Int? = null

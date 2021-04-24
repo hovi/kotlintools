@@ -5,8 +5,8 @@ import org.w3c.dom.events.Event
 import org.w3c.dom.events.EventTarget
 import org.w3c.dom.events.KeyboardEvent
 import org.w3c.dom.events.MouseEvent
-import kotlin.dom.addClass
-import kotlin.dom.removeClass
+import kotlinx.dom.addClass
+import kotlinx.dom.removeClass
 
 
 inline fun <reified E : Element> Element.queryHtmlSelectorAll(selectors: String): List<E> {

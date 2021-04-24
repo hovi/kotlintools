@@ -4,7 +4,7 @@ import org.w3c.dom.HTMLAnchorElement
 import org.w3c.dom.HTMLInputElement
 import org.w3c.dom.asList
 import org.w3c.fetch.Response
-import kotlin.browser.document
+import kotlinx.browser.document
 
 external fun encodeURIComponent(encodedURI: String): String
 

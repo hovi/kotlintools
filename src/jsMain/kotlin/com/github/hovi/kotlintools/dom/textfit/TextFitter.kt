@@ -5,7 +5,7 @@ import com.github.hovi.kotlintools.dom.queryHtmlSelector
 import com.github.hovi.kotlintools.dom.queryHtmlSelectorAll
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.HTMLSpanElement
-import kotlin.browser.document
+import kotlinx.browser.document
 
 
 data class TextFitterSettings(

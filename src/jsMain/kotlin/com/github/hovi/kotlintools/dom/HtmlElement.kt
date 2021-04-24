@@ -1,7 +1,7 @@
 package com.github.hovi.kotlintools.dom
 
 import org.w3c.dom.*
-import kotlin.browser.window
+import kotlinx.browser.window
 
 fun HTMLElement.hide() {
     this.style.display = "none"

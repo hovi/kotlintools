@@ -1,17 +1,6 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        google()
-        maven { url 'https://maven.google.com' }
-        maven { url "https://plugins.gradle.org/m2/" }
-        maven { url "https://jitpack.io" }
-        maven { url "https://kotlin.bintray.com/kotlinx" }
-    }
-}
-
 plugins {
     id 'org.jetbrains.kotlin.multiplatform'
-    id "maven-publish"
+    //id "maven-publish"
 }
 
 

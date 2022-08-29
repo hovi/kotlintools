@@ -1,9 +1,7 @@
 buildscript {
-    ext.kotlin_version = '1.6.21'
     repositories {
         mavenCentral()
         google()
-        jcenter()
         maven { url 'https://maven.google.com' }
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "https://jitpack.io" }
@@ -12,20 +10,11 @@ buildscript {
 }
 
 plugins {
-    id 'org.jetbrains.kotlin.multiplatform' version '1.6.21'
+    id 'org.jetbrains.kotlin.multiplatform'
     id "maven-publish"
 }
 
 
-repositories {
-    mavenCentral()
-    google()
-    jcenter()
-    maven { url 'https://maven.fabric.io/public' }
-    maven { url 'https://maven.google.com' }
-    maven { url "https://plugins.gradle.org/m2/" }
-    maven { url "https://jitpack.io" }
-}
 
 group 'com.github.hovi'
 version '0.0.24'
@@ -44,41 +33,32 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation kotlin('stdlib-common')
             }
         }
         commonTest {
             dependencies {
-                implementation kotlin('test-common')
-                implementation kotlin('test-annotations-common')
             }
         }
         jvmsharedMain {
             dependsOn commonMain
             dependencies {
-                implementation kotlin('stdlib-jdk8')
             }
         }
         jvmMain {
             dependsOn jvmsharedMain
             dependencies {
-                implementation kotlin('stdlib-jdk8')
             }
         }
         jvmTest {
             dependencies {
-                implementation kotlin('test')
-                implementation kotlin('test-junit')
             }
         }
         jsMain {
             dependencies {
-                implementation kotlin('stdlib-js')
             }
         }
         jsTest {
             dependencies {
-                implementation kotlin('test-js')
             }
         }
         iosMain {

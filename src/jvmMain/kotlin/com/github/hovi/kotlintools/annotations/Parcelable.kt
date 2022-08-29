@@ -1,4 +1,6 @@
 package com.github.hovi.kotlintools.annotations
 
-actual interface Parcelable
+actual typealias Serializable = java.io.Serializable
+
 actual annotation class Parcelize actual constructor()
+actual interface Parcelable

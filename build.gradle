@@ -1,6 +1,21 @@
+buildscript {
+    ext.kotlin_version = '1.7.10'
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://dl.bintray.com/kotlin/kotlin-eap"
+        }
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
 plugins {
     id 'org.jetbrains.kotlin.multiplatform'
-    //id "maven-publish"
 }
 
 
@@ -9,12 +24,9 @@ group 'com.github.hovi'
 version '0.0.24'
 
 kotlin {
-    iosX64("ios") {
-        binaries {
-            framework()
-        }
+    jvm {
+
     }
-    jvm("jvm")
     js {
         browser()
         nodejs()
@@ -28,13 +40,7 @@ kotlin {
             dependencies {
             }
         }
-        jvmsharedMain {
-            dependsOn commonMain
-            dependencies {
-            }
-        }
         jvmMain {
-            dependsOn jvmsharedMain
             dependencies {
             }
         }
@@ -49,27 +55,6 @@ kotlin {
         jsTest {
             dependencies {
             }
-        }
-        iosMain {
-        }
-        iosTest {
-        }
-    }
-}
-
-task copyFramework {
-    def buildType = project.findProperty('kotlin.build.type') ?: 'DEBUG'
-    def target = project.findProperty('kotlin.target') ?: 'ios'
-    dependsOn kotlin.targets."$target".binaries.getFramework(buildType).linkTask
-
-    doLast {
-        def srcFile = kotlin.targets."$target".binaries.getFramework(buildType).outputFile
-        def targetDir = getProperty('configuration.build.dir')
-        copy {
-            from srcFile.parent
-            into targetDir
-            include 'app.framework/**'
-            include 'app.framework.dSYM'
         }
     }
 }

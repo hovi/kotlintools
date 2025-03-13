@@ -16,7 +16,7 @@ fun String.removeAccents(): String {
 }
 
 fun String.createId(whitespaceReplacement: String = "-"): String {
-    return (this.removeAccents()).toLowerCase().replace("\\s+".toRegex(), whitespaceReplacement)
+    return (this.removeAccents()).lowercase().replace("\\s+".toRegex(), whitespaceReplacement)
 }
 
 fun Char.removeAccent(): Char {
@@ -25,5 +25,5 @@ fun Char.removeAccent(): Char {
 
 
 fun Char.isVowel(): Boolean {
-    return vowels.contains(toLowerCase().removeAccent())
+    return vowels.contains(lowercase().removeAccents().toCharArray().first())
 }

@@ -115,7 +115,7 @@ fun Element.scrollIntoView(behavior: String = "smooth", block: String = "start",
 }
 
 fun Element.isFormElement(): Boolean {
-    return tagName.toUpperCase() in arrayOf("INPUT", "SELECT", "TEXTAREA", "BUTTON")
+    return tagName.uppercase() in arrayOf("INPUT", "SELECT", "TEXTAREA", "BUTTON")
 }
 
 fun Element.disable(backup: Boolean = true) {
